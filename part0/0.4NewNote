@@ -1,27 +1,29 @@
-title Adding New Note (Some parts of this are taken from the example sequence diagram at https://fullstackopen.com/en/part0/fundamentals_of_web_apps#exercises-0-1-0-6. Thus not all content is original.)
+title Adding New Note 
 Actor user
 user->browser: types note into text box
+
 user->browser: clicks submit
+
 browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/notes (with form data Content-Type: application/x-www-form-urlencoded note=text_from_user)
-server-> browser: sends HTTP status code 302: URL redirect to .../new_note
-note right of server: processes POST request and creates HTML-code
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/new_note
-note over server: 
-The remainder of this sequence diagram is the same as that given in 
-the example
-https://fullstackopen.com/en/part0/fundamentals_of_web_apps#exercises-0-1-0-6 
-so credit for the portion below this note goes to University of Helsinki Fullstackopen.com
-end note over 
-server-->browser: HTML-code
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
-server-->browser: main.css
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
-server-->browser: main.js
 
-note over browser:
-browser starts executing js-code
-that requests JSON data from server
-end note
+server-> browser: sends new_note with HTTP status code 302: URL redirect to notes.
 
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-server-->browser: the resulting JSON data
+browser-> server: requests notes page.
+
+server-> browser: returns 304 status code which means that the server does not need to send the notes page
+
+browser-> server: requests main.css file
+
+server-> browser: returns 304 status code and does not send main.css because the browser previously downloaded it.
+
+browser-> server: request main.js
+
+server-> browser: sends another 304 response
+
+browser: executes main.js
+browser: sends GET request to /exampleapp/data.json
+
+server-> browser: sends data.json object
+
+server-> browser: sends favicon.ico
+
