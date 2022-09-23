@@ -1,0 +1,15 @@
+title Adding New Note with SPA
+Actor user
+user->browser: types note into text box
+
+user->browser: clicks submit
+
+browser->server: sends POST to https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+server->browser: sends spa.js
+
+browser: runs spa.js
+
+
+
+
