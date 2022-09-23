@@ -1,6 +1,6 @@
-title Adding New Note with SPA
+title Requesting SPA
 Actor user
-user->browser: types note into text box
+user->browser: Requests SPA
 
 user->browser: clicks submit
 
