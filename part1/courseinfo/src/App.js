@@ -1,33 +1,6 @@
-const Header = ({course}) => {
-				return (
-								<div>
-								{course.name}
-								</div>
-				);
-};
-
-const Content = ({parts}) => {
-				const [one, two, three] = parts;
-				return (
-								<div>
-								<Part details={one} /> 
-								<Part details={two} /> 
-								<Part details={three} /> 
-								</div>
-				);
-};
-
-const Part = ({details}) =>  <p> {details.name} {details.exercises} </p> ;
-
-const Total = ({parts}) => {
-				const [one, two, three] = parts;
-				return (
-								<> 
-								<p>Number of exercises {
-												one.exercises + two.exercises + three.exercises}
-								</p> </>
-				);};
-
+import Total from './Total.js'
+import Header from  './Header.js'
+import Content from './Content.js'
 
 const App = () => {
 				const parts = [

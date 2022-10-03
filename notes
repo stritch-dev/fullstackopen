@@ -1,0 +1,66 @@
+learn comparison between hook and class base 
+and where to useState() and and useEffect()
+--------------------
+useState hook
+ provides a component-safe setter. That is a callback method to change the state of the component. This avoids changing the state directly which could cause anomolies.
+Hook rules
+do not call useState() of useEffect() from inside of a loop or conditionals. Only use these hooks where a function is defining a component
+
+main fucntion block is similar to "constructor" or "init"
+---------------------------------------
+
+get comfortable with 
+object spread
+
+---------------------------------------
+
+REPEAT
+do not modify state directly
+use copy and replace instead
+no mutation
+one direction state flow
+
+Conditional rendering:
+one component may produce different output based on input
+---------------------------------------
+
+Keep developer console open
+use lots of console logs
+
+---------------------------------------
+JavaScript important to know
+Higher order functions (that is functions that return functions)
+Arrow functions
+map 
+reduce
+filter
+---------------------------------------
+
+No nested components. All components are on the same level.
+
+---------------------------------------
+Use keys for lists
+avoid using indexes for key id's
+
+---------------------------------------
+nice to have one component per file.
+Components start with Capital letters
+---------------------------------------
+
+---------------------------------------
+Use snippets
+---------------------------------------
+
+remember to export at the bottom
+
+FORMS
+a controlled component is manipulated by React
+--- what is this????
+
+select tag can take multiple values by setting multiple to true
+
+learn about formik api
+
+
+
+object spread, destructuring, rest 
