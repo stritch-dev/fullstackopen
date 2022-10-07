@@ -1,54 +1,52 @@
-import Header from './Header.js';
-import Course from './Course.js';
-import './App.css'
+import Courses from './Courses.js'
 
 const App = () => {
-	const courses = {
-id: 1,
-		name: 'Half Stack application development',
-		parts: [
+	const courses = [
 		{
-name: 'Fundamentals of React',
-			exercises: 10,
-			id: 1
+			name: 'Half Stack application development',
+			id: 1,
+			parts: [
+				{
+					name: 'Fundamentals of React',
+					exercises: 10,
+					id: 1
+				},
+				{
+					name: 'Using props to pass data',
+					exercises: 7,
+					id: 2
+				},
+				{
+					name: 'State of a component',
+					exercises: 14,
+					id: 3
+				},
+				{
+					name: 'Redux',
+					exercises: 11,
+					id: 4
+				}
+			]
 		},
 		{
-name: 'Using props to pass data',
-			exercises: 7,
-			id: 2
-		},
-		{
-name: 'State of a component',
-			exercises: 14,
-			id: 3
+			name: 'Node.js',
+			id: 2,
+			parts: [
+				{
+					name: 'Routing',
+					exercises: 3,
+					id: 1
+				},
+				{
+					name: 'Middlewares',
+					exercises: 7,
+					id: 2
+				}
+			]
 		}
-		]
-	}
+	]
 
-
-	const details = courses.parts;
-
-
-	return (
-			<div>
-			<ul>
-			{for (const detail in details) {
-			<Course content={detail.name} sections={detail.exercises} />
-			}
-			}
-			</ul>
-			<Header title="Info" />
-
-			</div>
-			);
+  return <ul><Courses courses={courses} /></ul>
 }
-
-const Line = ({words}) => {
-	return ( {words} );
-};
-
-
-
-
 
 export default App
