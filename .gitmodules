@@ -1,0 +1,3 @@
+[submodule "part2/part2/part2-notes"]
+	path = part2/part2/part2-notes
+	url = https://github.com/fullstack-hy2020/part2-notes.git
