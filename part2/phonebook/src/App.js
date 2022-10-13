@@ -1,16 +1,14 @@
 import {useState} from 'react'
+import Numbers from './component/Numbers'
 
-const Person = ({person}) => <p>{person.name} {person.number}</p>
-const Numbers = ({persons, personsToShow}) =>
-    <>
-        <h2>Numbers</h2>
-        <ul>
-            {personsToShow.map(person =>
-                <Person key={person.number} person={person}/>
-            )}
-        </ul>
+function Phonebook({onChange, persons, personsToShow}) {
+    return <>
+        <h2>Phonebook</h2>
+        filter show with
+        <input type="text" id="searchFilter" onChange={onChange}/>
+        <Numbers persons={persons} personsToShow={personsToShow}/>
     </>
-
+}
 
 const App = () => {
     const [persons, setPersons] = useState(preloadedPeople)
@@ -52,11 +50,7 @@ const App = () => {
                 </div>
             </form>
 
-            <h2>Phonebook</h2>
-            filter show with
-            <input type='text' id='searchFilter' onChange={applyFilter}/>
-
-            <Numbers persons={persons} personsToShow={personsToShow}/>
+            <Phonebook onChange={applyFilter} persons={persons} personsToShow={personsToShow}/>
 
         </div>
     )
