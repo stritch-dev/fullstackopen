@@ -1,17 +1,16 @@
 import {useState} from 'react'
-import Numbers from './component/Numbers'
+import Phonebook from './component/Phonebook'
+import axios from 'axios'
 
-function Phonebook({onChange, persons, personsToShow}) {
-    return <>
-        <h2>Phonebook</h2>
-        filter show with
-        <input type="text" id="searchFilter" onChange={onChange}/>
-        <Numbers persons={persons} personsToShow={personsToShow}/>
-    </>
-}
+const folks = [
+    {name: 'Arto Hellas', number: '040-123456', id: 1},
+    {name: 'Ada Lovelace', number: '39-44-5323523', id: 2},
+    {name: 'Dan Abramov', number: '12-43-234345', id: 3},
+    {name: 'Mary Poppendieck', number: '39-23-6423122', id: 4}]
+
 
 const App = () => {
-    const [persons, setPersons] = useState(preloadedPeople)
+    const [persons, setPersons] = useState(folks)
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [showWithFilter, setShowWithFilter] = useState('')
@@ -42,6 +41,7 @@ const App = () => {
 
     return (
         <div>
+            hi
             <form>
                 <div> name: <input value={newName} onChange={nameChange}/></div>
                 <div> number: <input value={newNumber} onChange={numberChange}/></div>
@@ -55,11 +55,5 @@ const App = () => {
         </div>
     )
 }
-
-const preloadedPeople = [
-    {name: 'Arto Hellas', number: '040-123456', id: 1},
-    {name: 'Ada Lovelace', number: '39-44-5323523', id: 2},
-    {name: 'Dan Abramov', number: '12-43-234345', id: 3},
-    {name: 'Mary Poppendieck', number: '39-23-6423122', id: 4}]
 
 export default App
