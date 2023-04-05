@@ -1,2 +1,2 @@
 # fullstackopen
-Exercises from the Full Stack Open curriculum
+Submitting exercises for the Full Stack Open curriculum provided by the University of Helsinki https://fullstackopen.com/
