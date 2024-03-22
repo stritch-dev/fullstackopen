@@ -7,10 +7,7 @@ app = express(),
 morgan = require("morgan");
 
 app.use(express.json());
-
-morgan.token("body", request => JSON.stringify(request.body));
-morgan.format("tinyPlus", ":method :url :status :res[content-length] - :response-time ms :body");
-app.use(morgan("tinyPlus"));
+app.use(morgan("tiny"));
 
 app.listen(3001, () => { console.log("Server running on port 3001"); });
 
