@@ -7,7 +7,7 @@ const App = () => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [showWithFilter, setShowWithFilter] = useState('')
-    const URL = 'http://localhost:3001/api/persons'
+    const URL = '/api/persons'
     console.log('URL:', URL);
 
     useEffect(() => {
