@@ -7,6 +7,9 @@ app = express(),
 morgan = require("morgan");
 
 app.use(express.json());
+
+morgan.token("body", request => JSON.stringify(request.body));
+morgan.format("tinyPlus", ":method :url :status :res[content-length] - :response-time ms :body");
 app.use(morgan("tinyPlus"));
 
 app.listen(3001, () => { console.log("Server running on port 3001"); });
@@ -80,9 +83,6 @@ generateId = () => {
 function unknownEndpoint (request, response) {
   response.status(404).send({ error: 'unknown endpoint' })
 }
-
-morgan.token("body", request => JSON.stringify(request.body));
-morgan.format("tinyPlus", ":method :url :status :res[content-length] - :response-time ms :body");
 
 // data
 let people = [
