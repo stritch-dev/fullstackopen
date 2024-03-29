@@ -1,0 +1,103 @@
+"use strict"
+
+// setup
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
+const env = require("dotenv").config();
+const mongoose = require("mongoose");
+
+const app = express();
+const PORT = process.env.PORT;
+const Phonebook = require("./models/phonebook");
+
+morgan.token("body", request => JSON.stringify(request.body));
+morgan.format("tinyPlus", ":method :url :status :res[content-length] - :response-time ms :body");
+
+app.use(express.json());
+app.use(express.static("build"));
+app.use(morgan("tinyPlus"));
+app.use(cors());
+app.listen(PORT, () => { console.log(`Server running on port ${PORT}`); });
+
+
+mongoose.connect(process.env.MONGODB_URI).then(() => {
+    console.log("Connected to MongoDB ", new Date().toLocaleString("en-US", {timeZone: "America/New_York"}));
+  }).catch(error => {
+    console.log("Error connecting to MongoDB:", error.message);
+});
+
+
+
+// routes
+app.get("/info", async (request, response) => {
+  try {
+    const documents = await Phonebook.countDocuments();
+    response.send(`<p>Phonebook has info for ${documents} people</p> ${new Date()}`);
+  } catch (error) {
+    handleError(error, response);
+  }
+});
+
+app.get("/api/persons", async (request, response) => {
+ const persons = await Phonebook.find({});
+ response.json(persons);
+}); 
+
+
+app.get("/api/persons/:id", async (request, response) => {
+  const id = request.params.id;
+  const person = await Phonebook.findById(id).exec();
+  if (person) {
+    response.json(person);
+  } else {
+    response.status(404).send({"error":`Person not found for id ${id}`});
+  }
+});
+
+app.post("/api/persons", async (request, response) => {
+  const name = request.body.name;
+  const number = request.body.number;
+  if (!name || !number) {
+    return response.status(400).json({error: "name or number missing"});
+  } else if (await Phonebook.findOne({name: name}) || await Phonebook.findOne({number: number})) {
+    return response.status(400).json({error: "name or number already exists"});
+  } else {
+    try{
+      const result = await Phonebook.create(request.body);
+      response.json(result);
+    } catch (error) {
+      handleError(error, response);
+    } 
+  }
+});
+
+app.delete("/api/persons/:id", async (request, response) => {
+  const id = request.params.id;
+  try{
+    const result = await Phonebook.findByIdAndDelete(id);
+
+  if (result) {
+    const message = `Person with id ${id} was deleteed`;
+    console.log(message);
+    response.status(204).send({"message":message}) 
+  } else { 
+    response.status(404).send({"error":`Person with ${id} was not found`});
+  }} catch (error) {
+    response.status(500).send({"error":`An error ooccured while trying to delete person with id ${id}`});
+  }
+});
+
+app.use(unknownEndpoint);
+
+
+// middleware
+function unknownEndpoint (request, response) {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+function handleError(error, response) {
+  console.log({"error": error.message});
+  response.status(500).send({"error": error.message});
+}
+
