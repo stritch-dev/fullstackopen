@@ -23,7 +23,7 @@ const App = () => {
      axios.delete(`http://localhost:3001/api/persons/${id}`)
      .then(response => {
        console.log("deleted");
-       setPersons(persons.filter(person => person.id !== id))
+       setPersons(persons.filter(person => person._id !== id))
      })
     .catch(error => alert(error)); 
    };
