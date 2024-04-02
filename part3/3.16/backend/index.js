@@ -45,7 +45,7 @@ app.get("/api/persons", async (request, response) => {
 }); 
 
 
-app.get("/api/persons/:id", async (request, response) => {
+app.get("/api/persons/:id", async (request, response, next) => {
   const id = request.params.id;
   try { 
     const person = await Phonebook.findById(id).exec();
@@ -56,7 +56,7 @@ app.get("/api/persons/:id", async (request, response) => {
     }
   }
    catch (error){
-      next(error)
+     next(error);
    }
 });
 
@@ -72,30 +72,30 @@ app.post("/api/persons", async (request, response) => {
       const result = await Phonebook.create(request.body);
       response.json(result);
     } catch (error) {
-      handleError(error, response);
+      next(error);
     } 
   }
 });
 
 app.delete("/api/persons/:id", async (request, response, next) => {
   const id = request.params.id;
+  
   try{
     const result = await Phonebook.findByIdAndDelete(id);
-
-  if (result) {
-    const message = `Person with id ${id} was deleteed`;
-    console.log(message);
-    response.status(204).send({"message":message}) 
+    if (result) {
+      const message = `Person with id ${id} was deleteed`;
+      console.log(message);
+      response.status(204).send({"message":message}) 
   } else { 
     response.status(404).send({"error":`Person with ${id} was not found`});
   }} catch (error) {
-    response.status(500).send({"error":`An error ooccured while trying to delete person with id ${id}`});
+    error.msg = error.msg + {"error":`An error ooccured while trying to delete person with id ${id}`};
+    next(error);
   }
 });
 
 app.use(handleError);
 app.use(unknownEndpoint);
-
 
 // middleware
 function handleError(error, request, response, next) {
