@@ -11,6 +11,7 @@ const App = () => {
   useEffect(() => {
     axios.get('http://localhost:3001/api/persons')
       .then(response => setPersons(response.data))
+      .catch(error => handleError(error));
   }, []) ;
 
   const applyFilter = (event) => {
@@ -24,10 +25,8 @@ const App = () => {
         console.log("deleted");
         setPersons(persons.filter(person => person.id !== id))
       })
-      .catch(error => alert(error)); 
+      .catch(error => handleError(error.messge)); 
   };
-
-
 
   const addOrUpdate = event => {
     event.preventDefault()
@@ -46,9 +45,7 @@ const App = () => {
     axios.post('http://localhost:3001/api/persons', newPerson)
      .then(response => {
        setPersons(persons.concat(response.data))
-      }).catch(error => {
-        alert(error)
-      });
+      }).catch(error => handleError(error));
   }
 
   const update = (existingPerson, newPerson) => {
@@ -57,7 +54,7 @@ const App = () => {
         console.log("updated");
         const updatedPerson = response.data;
         setPersons(persons.map(person => person.id !== existingPerson.id ? person : updatedPerson))
-      });
+      }).catch(error => handleError(error)) ;
   }
 
   const nameChange = (event) => {
@@ -68,9 +65,14 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
-  // this assums that only correct data is received from the database
-  const personsToShow = persons.filter(p => p.name.toLowerCase().includes(showWithFilter.toLowerCase()))
+  const handleError = (error) => {
+    console.log("error ", error)
+    console.log("error.response.data.error", error.response.data.error)
+    alert(error.response.data.error.message)
+    throw error;
+  }
 
+  const personsToShow = persons.filter(p => p.name.toLowerCase().includes(showWithFilter.toLowerCase()))
 
   const addPersonForm =
     <form>
@@ -91,13 +93,11 @@ const App = () => {
       </div>
     )
 
-
-
-
   function resetForm() {
     setNewName('');
     setNewNumber('') 
   } 
+
 }
 
 export default App
