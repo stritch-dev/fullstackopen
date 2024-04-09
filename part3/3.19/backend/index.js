@@ -85,11 +85,9 @@ app.post("/api/persons", async (request, response, next) => {
 
 app.put("/api/persons/:id", async (request, response, next) => {
   console.log("PUT request received");
-  console.log("request.body: ", request.body);
   const name = request.body.name;
   const body = request.body;
   const filter = {name: `${name}`};
-  console.log("filter: ", filter);
   try {
     console.log("Updating person with name ", name);
     const updatedPerson = await Phonebook.findOneAndUpdate(
@@ -102,7 +100,7 @@ app.put("/api/persons/:id", async (request, response, next) => {
     if (updatedPerson) {
       response.status(200).json(updatedPerson);
     } else {
-      response.status(404).send({"error":`Person with id ${id} not found`});
+      response.status(404).send({"error":`Person with id ${request.body.id} not found`});
     }
   } catch (error) {
     error.msg = error.msg + {"error":`An error occurred while trying to update person with name ${name}`};
